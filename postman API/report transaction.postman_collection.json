@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "b05d6c94-fa56-424e-be9a-680be5c590bb",
+		"name": "report transaction",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26565940",
+		"_collection_link": "https://www.postman.com/saharhaghighat/workspace/bank/collection/26565940-b05d6c94-fa56-424e-be9a-680be5c590bb?source=collection_link"
+	},
+	"item": [
+		{
+			"name": "merchantId and count and daily",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=count&mode=daily&merchantId=63a69a2d18f9347bd89d5f76",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "count"
+						},
+						{
+							"key": "mode",
+							"value": "daily"
+						},
+						{
+							"key": "merchantId",
+							"value": "63a69a2d18f9347bd89d5f76"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "merchantId and amount and daily",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=amount&mode=daily&merchantId=63a69a2d18f9347bd89d5f76",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "amount"
+						},
+						{
+							"key": "mode",
+							"value": "daily"
+						},
+						{
+							"key": "merchantId",
+							"value": "63a69a2d18f9347bd89d5f76"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "merchantId and amount and weekly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=amount&mode=weekly&merchantId=63a69a2d18f9347bd89d5f76",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "amount"
+						},
+						{
+							"key": "mode",
+							"value": "weekly"
+						},
+						{
+							"key": "merchantId",
+							"value": "63a69a2d18f9347bd89d5f76"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "merchantId and count and weekly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=count&mode=weekly&merchantId=63a69a2d18f9347bd89d5f76",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "count"
+						},
+						{
+							"key": "mode",
+							"value": "weekly"
+						},
+						{
+							"key": "merchantId",
+							"value": "63a69a2d18f9347bd89d5f76"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "merchantId and count and monthly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=count&mode=monthly&merchantId=63a69a2d18f9347bd89d5f76",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "count"
+						},
+						{
+							"key": "mode",
+							"value": "monthly"
+						},
+						{
+							"key": "merchantId",
+							"value": "63a69a2d18f9347bd89d5f76"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "merchantId and count and monthly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=amount&mode=monthly&merchantId=63a69a2d18f9347bd89d5f76",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "amount"
+						},
+						{
+							"key": "mode",
+							"value": "monthly"
+						},
+						{
+							"key": "merchantId",
+							"value": "63a69a2d18f9347bd89d5f76"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "monthly amount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=amount&mode=monthly",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "amount"
+						},
+						{
+							"key": "mode",
+							"value": "monthly"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "monthly count",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=count&mode=monthly",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "count"
+						},
+						{
+							"key": "mode",
+							"value": "monthly"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "weekly amount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=amount&mode=weekly",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "amount"
+						},
+						{
+							"key": "mode",
+							"value": "weekly"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "weekly count",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=count&mode=weekly",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "count"
+						},
+						{
+							"key": "mode",
+							"value": "weekly"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "daily amount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=amount&mode=daily",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "amount"
+						},
+						{
+							"key": "mode",
+							"value": "daily"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "daily count",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/transaction-report/?type=count&mode=daily",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"transaction-report",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "count"
+						},
+						{
+							"key": "mode",
+							"value": "daily"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

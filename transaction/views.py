@@ -112,7 +112,7 @@ class TransactionReportView(View):
         return JsonResponse(response_data, safe=False)
 
 
-class TransactionSummaryReportView(View):
+class TransactionSummaryView(View):
     def get(self, request):
         report_type = request.GET.get('type')
         mode = request.GET.get('mode')
@@ -124,42 +124,29 @@ class TransactionSummaryReportView(View):
         if not mode or mode not in ['daily', 'weekly', 'monthly']:
             return JsonResponse({'error': 'Invalid mode'}, status=400)
 
-        query = {'mode': mode, 'type': report_type}
+        pipeline = []
 
         if merchant_id:
             try:
-                query['merchantId'] = ObjectId(merchant_id)
+                merchant_id = ObjectId(merchant_id)
+                pipeline.append({'$match': {'merchantId': merchant_id}})
             except Exception:
                 return JsonResponse({'error': 'Invalid merchantId'}, status=400)
 
-        results = db.transaction_summary.find(query).sort([('_id', 1)])
+        pipeline.append({'$match': {'mode': mode, 'type': report_type}})
+
+        pipeline.extend([
+            {'$sort': {'key': 1}}
+        ])
+
+        results = db.transaction_summary.aggregate(pipeline)
 
         response_data = []
-        aggregated_results = {}
-
         for result in results:
-            try:
-                year = result['year']
-                month = result.get('month')
-                day = result.get('day', 1)  # Default day to 1 if not present
-                week = result.get('week')
-
-                if mode == 'daily':
-                    date_obj = datetime(year, month, day)
-                else:  # weekly or monthly
-                    date_obj = datetime(year, month or 1, 1)
-
-                key = convert_to_jalali(date_obj, mode, year, week, month)
-
-                if key in aggregated_results:
-                    aggregated_results[key] += result['value']
-                else:
-                    aggregated_results[key] = result['value']
-            except Exception as e:
-                return JsonResponse({'error': str(e)}, status=500)
-
-        for key, value in aggregated_results.items():
-            response_data.append({'key': key, 'value': value})
+            response_data.append({
+                'key': result.get('key'),
+                'value': result.get('value')
+            })
 
         return JsonResponse(response_data, safe=False)
 

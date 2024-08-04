@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "6c8bca14-5c08-4024-9725-ea047ea3fa49",
+		"name": "send notification",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26565940",
+		"_collection_link": "https://www.postman.com/saharhaghighat/workspace/bank/collection/26565940-6c8bca14-5c08-4024-9725-ea047ea3fa49?source=collection_link"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8000/send-notification/?medium=email,sms&recipient=saharrhaghighatt@gmail.com|09021163294&message=hello world",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/send-notification/?medium=email&recipient=test@example.com&message=Hello, this is a test email.",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"send-notification",
+						""
+					],
+					"query": [
+						{
+							"key": "medium",
+							"value": "email"
+						},
+						{
+							"key": "recipient",
+							"value": "test@example.com"
+						},
+						{
+							"key": "message",
+							"value": "Hello, this is a test email."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/send-notification/?medium=sms,push&recipient=1234567890|device_token&message=Hello, this is a test message.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/send-notification/?medium=sms,push&recipient=1234567890|device_token&message=Hello, this is a test message.",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"send-notification",
+						""
+					],
+					"query": [
+						{
+							"key": "medium",
+							"value": "sms,push"
+						},
+						{
+							"key": "recipient",
+							"value": "1234567890|device_token"
+						},
+						{
+							"key": "message",
+							"value": "Hello, this is a test message."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/send-notification/?medium=email&recipient=test@example.com&message=Hello, this is a test email.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/send-notification/?medium=email&recipient=test@example.com&message=Hello, this is a test email.",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"send-notification",
+						""
+					],
+					"query": [
+						{
+							"key": "medium",
+							"value": "email"
+						},
+						{
+							"key": "recipient",
+							"value": "test@example.com"
+						},
+						{
+							"key": "message",
+							"value": "Hello, this is a test email."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://yourserver/send-notification/?medium=email&recipient=test@example.com&message=Hello, this is a test email.\",",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://yourserver/send-notification/?medium=email&recipient=test@example.com&message=Hello, this is a test email.\",",
+					"protocol": "http",
+					"host": [
+						"yourserver"
+					],
+					"path": [
+						"send-notification",
+						""
+					],
+					"query": [
+						{
+							"key": "medium",
+							"value": "email"
+						},
+						{
+							"key": "recipient",
+							"value": "test@example.com"
+						},
+						{
+							"key": "message",
+							"value": "Hello, this is a test email.\","
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,7 +1,7 @@
-from django.core.management.base import BaseCommand
-from pymongo import MongoClient
-from bson import ObjectId
 from datetime import datetime
+from bson import ObjectId
+from django.core.management.base import BaseCommand
+from transaction.views import convert_to_jalali
 from utills.db_connection import db
 
 
@@ -56,29 +56,15 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.ERROR(f'Invalid merchantId: {merchant_id}'))
                 return
 
-        pipeline.append({'$match': {'createdAt': {'$exists': True, '$ne': None}}})
+        group_id = {
+            'year': {'$year': '$createdAt'},
+            'month': {'$month': '$createdAt'},
+            'day': {'$dayOfMonth': '$createdAt'},
+            'week': {'$week': '$createdAt'} if mode == 'weekly' else None
+        }
+        group_id = {k: v for k, v in group_id.items() if v is not None}
 
-        if mode == 'daily':
-            group_id = {
-                'year': {'$year': '$createdAt'},
-                'month': {'$month': '$createdAt'},
-                'day': {'$dayOfMonth': '$createdAt'}
-            }
-        elif mode == 'weekly':
-            group_id = {
-                'year': {'$year': '$createdAt'},
-                'week': {'$week': '$createdAt'}
-            }
-        else:  # monthly
-            group_id = {
-                'year': {'$year': '$createdAt'},
-                'month': {'$month': '$createdAt'}
-            }
-
-        if report_type == 'count':
-            aggregation = {'$sum': 1}
-        else:
-            aggregation = {'$sum': '$amount'}
+        aggregation = {'$sum': 1} if report_type == 'count' else {'$sum': '$amount'}
 
         pipeline.extend([
             {'$group': {'_id': group_id, 'value': aggregation}},
@@ -88,32 +74,35 @@ class Command(BaseCommand):
         results = db.transaction.aggregate(pipeline)
 
         for result in results:
-            summary_data = {
-                'mode': mode,
-                'type': report_type,
-                'year': result['_id']['year'],
-                'value': result['value']
-            }
+            try:
+                year = result['_id']['year']
+                month = result['_id'].get('month')
+                day = result['_id'].get('day')
+                week = result['_id'].get('week')
 
-            if mode == 'daily':
-                summary_data.update({
-                    'month': result['_id']['month'],
-                    'day': result['_id']['day']
-                })
-            elif mode == 'weekly':
-                summary_data.update({
-                    'week': result['_id']['week']
-                })
-            else:  # monthly
-                summary_data.update({
-                    'month': result['_id']['month']
-                })
+                if mode == 'daily' or mode == 'weekly':
+                    date_obj = datetime(year, month, day)
 
-            if merchant_id:
-                summary_data['merchantId'] = merchant_id
+                else:  # monthly
+                    date_obj = datetime(year, month, 1)
 
-            db.transaction_summary.update_one(
-                {'mode': mode, 'type': report_type, **summary_data},
-                {'$set': summary_data},
-                upsert=True
-            )
+                key = convert_to_jalali(date_obj, mode, week)
+
+                summary_data = {
+                    'mode': mode,
+                    'type': report_type,
+                    'key': key,
+                    'value': result['value']
+                }
+
+                if merchant_id:
+                    summary_data['merchantId'] = merchant_id
+
+                db.transaction_summary.update_one(
+                    {'mode': mode, 'type': report_type, 'key': key,
+                     **({'merchantId': merchant_id} if merchant_id else {})},
+                    {'$set': summary_data},
+                    upsert=True
+                )
+            except Exception as e:
+                self.stdout.write(self.style.ERROR(f'Error processing result: {e}'))
