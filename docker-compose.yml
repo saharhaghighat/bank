@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo:latest
+    container_name: mongo
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  django:
+    build:
+      context: .
+    container_name: django
+    environment:
+      - SERVICE_TYPE=django
+      - DJANGO_SETTINGS_MODULE=bank.settings
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
+
+  celery:
+    build:
+      context: .
+    container_name: celery
+    environment:
+      - SERVICE_TYPE=celery
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    command: ["celery", "-A", "bank", "worker", "--loglevel=info"]
+
+  beat:
+    build:
+      context: .
+    container_name: beat
+    environment:
+      - SERVICE_TYPE=celery
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    command: ["celery", "-A", "bank", "beat", "--loglevel=info"]
+
+volumes:
+  mongo-data:
